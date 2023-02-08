@@ -111,7 +111,7 @@ def conditional_generator(latent_t, brush, verbose=False):
     I = 0
     design = new_design(latent_t.shape)
     maybe_print = print if verbose else (lambda *args, **kwargs: None)
-    maybe_print(f"create empty design.")
+    maybe_print("create empty design.")
     yield design
     while (design.design == UNASSIGNED).any():
         maybe_print(f"iteration {I}")
@@ -165,13 +165,12 @@ def _generate_feasible_design_rust(latent_t, brush, verbose=False):
     void_touches = np.asarray(np.where(void_touch_existing, 9, 8), dtype=np.uint8)
     solid_touches = np.asarray(np.where(solid_touch_existing, 9, 8), dtype=np.uint8)
 
-    design = Design(
+    return Design(
         np.asarray(void_pixels).reshape(m, n),
         np.asarray(solid_pixels).reshape(m, n),
         np.asarray(void_touches).reshape(m, n),
         np.asarray(solid_touches).reshape(m, n),
     )
-    return design
 
 # %% ../notebooks/04_conditional_generator.ipynb 19
 def generate_feasible_design_mask_(latent_t, brush, backend='auto'):
