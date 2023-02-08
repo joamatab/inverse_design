@@ -66,8 +66,7 @@ def new_design(shape):
 # %% ../notebooks/03_design.ipynb 6
 def design_mask(design, dtype=float):
     one = jnp.ones_like(design.design, dtype=dtype)
-    mask = jnp.where(design.design == VOID, -1, one)
-    return mask
+    return jnp.where(design.design == VOID, -1, one)
 
 # %% ../notebooks/03_design.ipynb 7
 def visualize(design, grid=True):
@@ -118,8 +117,7 @@ def _find_free_touches_alternative(touches_mask, pixels_mask, brush):
     sum_mask = dilute(jnp.asarray(pixels_mask, dtype=jnp.uint32), brush_u32)
     ref_mask = dilute(jnp.ones_like(sum_mask), brush_u32)
     free_mask = sum_mask == ref_mask
-    free_mask = free_mask & (~touches_mask)
-    return free_mask
+    return free_mask & (~touches_mask)
 
 # %% ../notebooks/03_design.ipynb 11
 @jax.jit
